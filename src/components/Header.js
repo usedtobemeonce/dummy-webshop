@@ -24,7 +24,7 @@ export default ({ history }) => {
     );
 }
 
-const StyledHeader = styled.div`
+const StyledHeader = styled.nav`
     height: 67px;
     display: flex;
     flex-direction: row;

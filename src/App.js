@@ -16,13 +16,13 @@ export default withRouter(props => {
   )
 
   return (
-    <div>
+    <>
       <Header {...props} />
-      <main>
+      <main style={{height: 'calc(100vh - 67px)'}}>
         <Suspense fallback="Loading shop">
           {routes}
         </Suspense>
       </main>
-    </div>
+    </>
   );
 });
