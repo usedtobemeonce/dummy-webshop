@@ -17,7 +17,7 @@ export default withRouter(props => {
 
   return (
     <div>
-      <Header />
+      <Header {...props} />
       <main>
         <Suspense fallback="Loading shop">
           {routes}
