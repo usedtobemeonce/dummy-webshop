@@ -1,13 +1,28 @@
-import React, { Component } from 'react';
+import React, { Suspense } from 'react';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
+import Header from './components/Header';
+import Home from './pages/Home';
+import Models from './pages/Models';
 
-      </div>
-    );
-  }
-}
+export default withRouter(props => {
 
-export default App;
+  const routes = (
+    <Switch>
+      <Route exact path='/models' component={Models} />
+      <Route exact path='/' component={Home} />
+      <Redirect exact to="/" />
+    </Switch>
+  )
+
+  return (
+    <div>
+      <Header />
+      <main>
+        <Suspense fallback="Loading shop">
+          {routes}
+        </Suspense>
+      </main>
+    </div>
+  );
+});
