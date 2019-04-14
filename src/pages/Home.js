@@ -5,17 +5,21 @@ import NikeSneakers from '../assets/images/home_image.png';
 import Button from '../components/shared/Button';
 import Image from '../components/shared/Image';
 
-const Home = props => {
+const Home = ({ history }) => {
+    
+    const handleButtonClick = () => {
+        history.push('/models');
+    }
 
     return (
         <StyledHome>
             <StyledImageWrapper>
-                <Image src={NikeSneakers} alt="nike sneakers." />
+                <Image src={NikeSneakers} alt="nike sneakers." withAnimation />
             </StyledImageWrapper>
             <Content>
                 <h1>Unleash the speed.</h1>
                 <p>Better technique for more speed during those long runs. Increased comfort from the extra cushioning. </p>
-                <Button>Browse models</Button>
+                <Button onClick={handleButtonClick}>Browse models</Button>
             </Content>
         </StyledHome>
     );

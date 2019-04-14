@@ -1,9 +1,13 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 
-export default ({ src, alt, className }) => {
+export default ({ src, alt, className, withAnimation }) => {
     return (
-        <StyledImage className={className} src={src} alt={alt || "image description"} />
+        <StyledImage
+            className={className}
+            withAnimation={withAnimation}
+            src={src} alt={alt || "image description"}
+        />
     );
 }
 
@@ -34,12 +38,16 @@ const mobileSlideIn = keyframes`
 `;
 
 const StyledImage = styled.img`
-    animation: ${slideIn} .8s linear;
+    ${props => props.withAnimation && css`
+        animation: ${slideIn} .8s linear;
+    `}
 
     width: 80%;
     height: auto;
 
     @media (max-width: 900px) {
-        animation: ${mobileSlideIn} .8s linear;
+        ${props => props.withAnimation && css`
+            animation: ${mobileSlideIn} .8s linear;
+        `}
     }
 `;
