@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import initialProducts from '../data/products';
@@ -15,10 +15,17 @@ export default props => {
         console.log(product);
     }
 
-    // Just to simulate loading the products from the backend
-    setTimeout(() => {
-        setProducts(initialProducts)
-    }, 2000);
+    useEffect(() => {
+        getProducts();
+    }, []);
+
+    const getProducts = () => {
+        // Simulate loading the products from the backend
+        setTimeout(() => {
+            setProducts(initialProducts);
+            setChosenProduct(initialProducts[0]);
+        }, 1000);
+    }
 
     return (
         <StyledProducts>

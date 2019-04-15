@@ -1,12 +1,20 @@
 import React from 'react';
 import styled, { keyframes, css } from 'styled-components';
 
-export default ({ src, alt, className, withAnimation }) => {
+export default ({ src, alt, className, withAnimation, onClick }) => {
+
+    const handleClicked = e => {
+        if (onClick) {
+            onClick(e);
+        }
+    }
+
     return (
         <StyledImage
             className={className}
             withAnimation={withAnimation}
             src={src} alt={alt || "image description"}
+            onClick={handleClicked}
         />
     );
 }
