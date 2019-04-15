@@ -9,6 +9,7 @@ import useMedia from './hooks/useMedia';
 import Context from './state/context';
 import reducer from './state/reducer';
 import InfoBar from './components/InfoBar';
+import './FontAwesomeIcons';
 
 export default withRouter(props => {
   const initialState = useContext(Context);

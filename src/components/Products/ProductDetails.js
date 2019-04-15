@@ -1,22 +1,23 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
-import Select from 'react-select';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Image from '../shared/Image';
 import Button from '../shared/Button';
+import Tag from '../shared/Tag';
+import Panel from '../shared/Panel';
 import Context from '../../state/context';
 
 export default () => {
     const { state } = useContext(Context);
     const [currentImage, setCurrentImage] = useState(null);
-    const [options, setOptions] = useState(null);
-    const [selectedOption, setSelectedOption] = useState(null);
+    const [selectedSize, setSelectedSize] = useState(null);
+    const [isError, setIsError] = useState(false);
     const { product } = state;
 
     useEffect(() => {
         if (product && product.images[0]) {
             setCurrentImage(`../img/${product.images[0]}`);
-            setOptions(product.sizes);
         }
     }, [product]);
 
@@ -24,15 +25,20 @@ export default () => {
         setCurrentImage(`../img/${image}`);
     }
 
-    const handleSelectedSizeChanged = option => {
-        setSelectedOption(option);
+    const handleSizeSelected = size => {
+        setIsError(false);
+        setSelectedSize(size);
     }
 
     const handleAddToCart = () => {
+        if (!selectedSize) {
+            setIsError(true);
+            return;
+        }
         const productSelected = {
             id: product.id,
             price: product.price,
-            size: selectedOption.value,
+            size: selectedSize,
         };
         console.log('add to cart clicked', productSelected);
     }
@@ -52,30 +58,43 @@ export default () => {
                     </CurrentImage>
                 </ProductImagesRow>
                 <Row>
-                    <RowItem><h1>{product.name}</h1></RowItem>
-                </Row>
-                <Row>
-                    <RowItem><p>{product.description}</p></RowItem>
-                </Row>
-                <Row>
-                    <RowOptions>
-                        <label>Size</label>
-                        {options &&
-                            <StyledSelect
-                                options={options}
-                                optionRenderer={option => <div className="needsclick">{option.label}</div>}
-                                placeholder="Select size"
-                                value={options && selectedOption ? options.find(option => option.value === selectedOption.value) : ''}
-                                onChange={handleSelectedSizeChanged}
-                            />
-                        }
-                        <div className="price">${product.price}</div>
-                    </RowOptions>
-                </Row>
-                <Row>
-                    <RowOptions>
-                        <Button className="add-to-cart" onClick={handleAddToCart}>Add to cart</Button>
-                    </RowOptions>
+                    <RowItem>
+                        <Panel>
+                            <h1>{product.name}</h1>
+                            <p>{product.description}</p>
+                            <Row>
+                                <RowOptions>
+                                    <label>Size</label>
+                                    <div>
+                                        {product.sizes.map(size => (
+                                            <Tag
+                                                key={size.value}
+                                                isSelected={selectedSize === size.value}
+                                                onClick={() => handleSizeSelected(size.value)}
+                                            >
+                                                {size.label}
+                                            </Tag>
+                                        ))}
+                                    </div>
+                                    {isError && <span className="error">Please select a size!</span>}
+                                </RowOptions>
+                                <RowOptions>
+                                    <div className="price">
+                                        ${product.price.toString().split('.')[0]}
+                                        {'.'}
+                                        <span className="price-small">{product.price.toString().split('.')[1]}</span>
+                                    </div>
+                                </RowOptions>
+                            </Row>
+                            <Row>
+                                <RowOptions>
+                                    <Button className="add-to-cart" onClick={handleAddToCart}>
+                                        <FontAwesomeIcon icon="shopping-cart" /> Add to cart
+                                    </Button>
+                                </RowOptions>
+                            </Row>
+                        </Panel>
+                    </RowItem>
                 </Row>
             </Container>
         );
@@ -165,6 +184,10 @@ const Row = styled.div`
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
+
+    @media (max-width: 900px) {
+        flex-wrap: wrap;
+    }
 `;
 
 const RowItem = styled.div`
@@ -195,13 +218,23 @@ const RowOptions = styled.div`
         flex: 0 0 50px;
     }
 
+    .error {
+        color: red;
+        font-weight: 700;
+    }
+
     .price {
         flex: 1;
         text-align: end;
         margin: 20px;
         font-size: 2rem;
         letter-spacing: .1rem;
-        color: green;
+    }
+
+    .price-small {
+        font-size: 0.7em;
+        position: relative;
+        bottom: 0.25em;
     }
     
     .add-to-cart {
@@ -210,15 +243,14 @@ const RowOptions = styled.div`
     }
 
     @media (max-width: 1200px) {
-        justify-content: center;
+        display: block;
 
         .price {
             display: block;
         }
-    }
-`;
 
-const StyledSelect = styled(Select)`
-    flex: 1 0 200px;
-    max-width: 300px;
+        .add-to-cart {
+            min-width: 300px;
+        }
+    }
 `;
