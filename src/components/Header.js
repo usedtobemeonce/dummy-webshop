@@ -16,7 +16,7 @@ export default ({ history }) => {
                 <img src={Logo} alt="the logo of the app" onClick={handleLogoClicked} />
                 <Menu>
                     <NavLink to='/' exact activeClassName="navActive">Home</NavLink>
-                    <NavLink to='/models' exact activeClassName="navActive">Models</NavLink>
+                    <NavLink to='/models' activeClassName="navActive">Models</NavLink>
                     <NavLink to='/shopping-cart' exact activeClassName="navActive">Shopping cart</NavLink>
                 </Menu>
             </StyledHeader>

@@ -63,6 +63,7 @@ export default () => {
                         {options &&
                             <StyledSelect
                                 options={options}
+                                optionRenderer={option => <div className="needsclick">{option.label}</div>}
                                 placeholder="Select size"
                                 value={options && selectedOption ? options.find(option => option.value === selectedOption.value) : ''}
                                 onChange={handleSelectedSizeChanged}
