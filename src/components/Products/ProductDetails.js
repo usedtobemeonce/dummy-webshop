@@ -1,20 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import Select from 'react-select';
 
 import Image from '../shared/Image';
 
 export default props => {
     const [currentImage, setCurrentImage] = useState(null);
+    const [options, setOptions] = useState(null);
+    const [selectedOption, setSelectedOption] = useState(null);
     const { product, className } = props;
 
     useEffect(() => {
         if (product && product.images[0]) {
             setCurrentImage(`../img/${product.images[0]}`);
+            setOptions(product.sizes);
         }
-    }, [product])
+    }, [product]);
 
     const handleImageClicked = image => {
         setCurrentImage(`../img/${image}`);
+    }
+
+    const handleSelectedSizeChanged = option => {
+        console.log(option);
+        setSelectedOption(option);
     }
 
     let content = null;
@@ -37,6 +46,18 @@ export default props => {
                 <Row>
                     <RowItem><p>{product.description}</p></RowItem>
                 </Row>
+                <Row>
+                    <label>Size</label>
+                    {options &&
+                        <StyledSelect
+                            options={options}
+                            placeholder="Select size"
+                            value={options && selectedOption ? options.find(option => option.value === selectedOption.value) : ''}
+                            onChange={handleSelectedSizeChanged}
+                        />
+                    }
+                    <div className="price">${product.price}</div>
+                </Row>
             </Container>
         );
     }
@@ -57,6 +78,20 @@ const Row = styled.div`
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
+
+    label {
+        margin-right: 20px;
+        font-size: 1.2em;
+    }
+
+    .price {
+        flex: 1;
+        text-align: end;
+        margin: 20px;
+        font-size: 1.5em;
+        letter-spacing: .1rem;
+        color: green;
+    }
 `;
 
 const RowItem = styled.div`
@@ -96,4 +131,9 @@ const CurrentImage = styled.div`
     img {
         cursor: pointer;
     }
+`;
+
+const StyledSelect = styled(Select)`
+    flex: 1 0 100px;
+    max-width: 200px;
 `;
