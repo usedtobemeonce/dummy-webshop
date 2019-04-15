@@ -1,18 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
+import queryString from 'query-string';
 
 import initialProducts from '../data/products';
 import ProductsList from '../components/Products/ProductsList';
 import ProductDetails from '../components/Products/ProductDetails';
+import useMedia from '../hooks/useMedia';
+import Context from '../state/context';
 
-export default props => {
-
-    const [products, setProducts] = useState(null);
-    const [chosenProduct, setChosenProduct] = useState(null);
+export default ({ history, location }) => {
+    const { state, dispatch } = useContext(Context);
+    const isSmallScreen = useMedia('(max-width: 1200px)');
+    const { product, products } = state;
 
     const handleProductClicked = product => {
-        setChosenProduct(product);
-        console.log(product);
+        dispatch({ type: 'PRODUCT_SELECTED', payload: product });
+        history.push(`/models/product?id=${product.id}`);
     }
 
     useEffect(() => {
@@ -20,24 +23,32 @@ export default props => {
     }, []);
 
     const getProducts = () => {
-        // Simulate loading the products from the backend
-        setTimeout(() => {
-            setProducts(initialProducts);
-            setChosenProduct(initialProducts[0]);
-        }, 1000);
+        if (!products) {
+            // Simulate loading the products from the backend
+            setTimeout(() => {
+                dispatch({ type: 'SET_PRODUCTS', payload: initialProducts });
+                const queryParams = queryString.parse(location.search);
+                if (queryParams && queryParams.id) {
+                    const productFromQuery = initialProducts.find(product => product.id === queryParams.id);
+                    dispatch({ type: 'PRODUCT_SELECTED', payload: productFromQuery });
+                } else {
+                    dispatch({ type: 'PRODUCT_SELECTED', payload: initialProducts[0] });
+                }
+            }, 1000);
+        }
     }
 
     return (
         <StyledProducts>
             <ProductsList
                 products={products}
-                chosenProduct={chosenProduct}
+                chosenProduct={product}
+                isSmallScreen={isSmallScreen}
                 onClick={handleProductClicked}
             />
-            <ProductDetails
+            {!isSmallScreen && <ProductDetails
                 className="product-details"
-                product={chosenProduct}
-            />
+            />}
         </StyledProducts>
     );
 }

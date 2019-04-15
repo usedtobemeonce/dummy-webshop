@@ -40,7 +40,7 @@ export default [
     },
     {
         id: '003',
-        thumbnail: '/nike_lunarlon/1,png',
+        thumbnail: '/nike_lunarlon/1.png',
         name: 'Nike Lunarlon',
         price: 87.79,
         isChosen: false,

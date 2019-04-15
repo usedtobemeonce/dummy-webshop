@@ -1,20 +1,19 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import Checkmark from '../../assets/images/checkmark.png';
 import Image from '../shared/Image';
 import Spinner from '../shared/Spinner';
 
 export default props => {
 
-    const { products, chosenProduct } = props;
+    const { products, chosenProduct, isSmallScreen } = props;
 
     const handleProductClicked = product => {
         props.onClick(product);
     }
 
     return (
-        <StyledProductsList>
+        <StyledProductsList isSmallScreen={isSmallScreen}>
             <h2>Take a pick</h2>
             {products === null
                 ? <Spinner />
@@ -27,12 +26,6 @@ export default props => {
                         <Image className="product-image" src={`../img/${product.thumbnail}`} alt="nike shoes" />
                         <div className="product-name">{product.name}</div>
                         <div className="product-price">${product.price}</div>
-                        <div className="product-is-chosen">
-                            {chosenProduct && chosenProduct.id === product.id
-                                ? <Image src={Checkmark} />
-                                : null
-                            }
-                        </div>
                     </StyledProductItem>
                 ))
             }
@@ -44,6 +37,10 @@ const StyledProductsList = styled.div`
     width: 500px;
     padding: 10px 0;
     padding-top: 50px;
+    ${props => props.isSmallScreen && css`
+        width: 100%;
+        padding-top: 10px;
+    `}
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -86,16 +83,13 @@ const StyledProductItem = styled.div`
         flex: 0 60px;
     }
 
-    .product-is-chosen {
-        flex-basis: 30px;
-
-        img {
-            max-height: 50px;
-            max-width: 40px;
-        }
-    }
-
     div {
         margin: 10px;
+    }
+
+    @media (max-width: 1400px) {
+        .product-price {
+            display: none;
+        }
     }
 `;

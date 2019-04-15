@@ -1,0 +1,12 @@
+import React from 'react'
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
+export default styled(Link)`
+    text-decoration: none;
+    color: inherit;
+
+    :hover {
+        color: #0091FC;
+    }
+`;

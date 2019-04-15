@@ -42,17 +42,28 @@ const StyledHeader = styled.nav`
         display: block;
         cursor: pointer;
     }
+
+    @media (max-width: 1200px) {
+        justify-content: center;
+    }
 `;
 
 const Menu = styled.div`
-    width: 20%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
 
+    a {
+        margin: 0 20px;
+    }
+
     .navActive {
         border-bottom: 5px solid #0091FC;
         transition: all 0.1s ease-in;
+    }
+
+    @media (max-width: 1200px) {
+        display: none;
     }
 `;
