@@ -7,7 +7,7 @@ import Models from './pages/Models';
 import ProductDetails from './components/Products/ProductDetails';
 import useMedia from './hooks/useMedia';
 import Context from './store/context';
-import reducer from './state/reducer';
+import reducer from './store/reducer';
 import InfoBar from './components/InfoBar';
 import './FontAwesomeIcons';
 
