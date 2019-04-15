@@ -10,6 +10,11 @@ export default function reducer(state, { type, payload }) {
                 ...state,
                 products: payload
             }
+        case 'ADD_TO_CART':
+            return {
+                ...state,
+                shoppingCart: state.shoppingCart.concat(payload),
+            }
         default: {
             return state;
         }

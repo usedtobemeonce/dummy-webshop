@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
 import Logo from '../assets/images/logo.png';
+import Context from '../store/context';
 
 export default ({ history }) => {
+    const [shoppingCartCount, setShoppingCartCount] = useState(0);
+    const { state } = useContext(Context);
+
+    useEffect(() => {
+        if (state.shoppingCart) {
+            setShoppingCartCount(state.shoppingCart.length);
+        }
+    }, [state.shoppingCart]);
 
     const handleLogoClicked = () => {
         history.push('/');
@@ -17,7 +26,9 @@ export default ({ history }) => {
                 <Menu>
                     <NavLink to='/' exact activeClassName="navActive">Home</NavLink>
                     <NavLink to='/models' activeClassName="navActive">Models</NavLink>
-                    <NavLink to='/shopping-cart' exact activeClassName="navActive">Shopping cart</NavLink>
+                    <NavLink to='/shopping-cart' exact activeClassName="navActive">
+                        Shopping cart {shoppingCartCount > 0 && <span className="cart-count"> ({shoppingCartCount})</span>}
+                    </NavLink>
                 </Menu>
             </StyledHeader>
         </>
@@ -61,6 +72,11 @@ const Menu = styled.div`
     .navActive {
         border-bottom: 5px solid #0091FC;
         transition: all 0.1s ease-in;
+    }
+
+    .cart-count {
+        font-weight: 700;
+        font-size: 1.3rem;
     }
 
     @media (max-width: 1200px) {

@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled, { css } from 'styled-components';
 
 import CustomLink from './shared/CustomLink';
+import Context from '../store/context';
 
 const InfoBar = ({ location }) => {
+    const [shoppingCartCount, setShoppingCartCount] = useState(0);
+    const { state } = useContext(Context);
     let showBackToModelsLink = false;
+
+    useEffect(() => {
+        if (state.shoppingCart) {
+            setShoppingCartCount(state.shoppingCart.length);
+        }
+    }, [state.shoppingCart]);
 
     if (location.pathname !== '/models' && location.pathname !== '/') {
         showBackToModelsLink = true;
@@ -15,7 +24,10 @@ const InfoBar = ({ location }) => {
     return (
         <StyledInfoBar justifyEnd={!showBackToModelsLink}>
             {showBackToModelsLink && <CustomLink to="/models">Back to products</CustomLink>}
-            <CustomLink to="/shopping-cart">Shopping cart</CustomLink>
+            <CustomLink to="/shopping-cart">
+                Shopping cart
+                {shoppingCartCount > 0 && <span className="cart-count"> ({shoppingCartCount})</span>}
+            </CustomLink>
         </StyledInfoBar>
     );
 }
@@ -34,5 +46,10 @@ const StyledInfoBar = styled.div`
         justify-content: flex-end;
     `}
     padding: 10px 20px;
+
+    .cart-count {
+        font-weight: 700;
+        font-size: 1.3rem;
+    }
 `;
 

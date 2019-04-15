@@ -6,7 +6,7 @@ import initialProducts from '../data/products';
 import ProductsList from '../components/Products/ProductsList';
 import ProductDetails from '../components/Products/ProductDetails';
 import useMedia from '../hooks/useMedia';
-import Context from '../state/context';
+import Context from '../store/context';
 
 export default ({ history, location }) => {
     const { state, dispatch } = useContext(Context);

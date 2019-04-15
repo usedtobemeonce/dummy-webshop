@@ -6,13 +6,15 @@ import Image from '../shared/Image';
 import Button from '../shared/Button';
 import Tag from '../shared/Tag';
 import Panel from '../shared/Panel';
-import Context from '../../state/context';
+import ProceedOptions from './ProceedOptions';
+import Context from '../../store/context';
 
 export default () => {
-    const { state } = useContext(Context);
+    const { state, dispatch } = useContext(Context);
     const [currentImage, setCurrentImage] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);
     const [isError, setIsError] = useState(false);
+    const [productAddedToCart, setProductAddedToCart] = useState(null);
     const { product } = state;
 
     useEffect(() => {
@@ -35,16 +37,23 @@ export default () => {
             setIsError(true);
             return;
         }
-        const productSelected = {
+        const selectedProduct = {
             id: product.id,
             price: product.price,
             size: selectedSize,
         };
-        console.log('add to cart clicked', productSelected);
+        console.log('add to cart clicked', selectedProduct);
+        setProductAddedToCart(true);
+        dispatch({ type: 'ADD_TO_CART', payload: selectedProduct });
+    }
+
+    const handleContinueShopping = () => {
+        setProductAddedToCart(false);
+        setSelectedSize(null);
     }
 
     let content = null;
-    if (product) {
+    if (product && !productAddedToCart) {
         content = (
             <Container>
                 <ProductImagesRow>
@@ -94,6 +103,16 @@ export default () => {
                                 </RowOptions>
                             </Row>
                         </Panel>
+                    </RowItem>
+                </Row>
+            </Container>
+        );
+    } else if (productAddedToCart) {
+        content = (
+            <Container>
+                <Row>
+                    <RowItem>
+                        <ProceedOptions onContinueShoppingClick={handleContinueShopping} />
                     </RowItem>
                 </Row>
             </Container>
