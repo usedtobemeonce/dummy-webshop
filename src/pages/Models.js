@@ -1,31 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import products from '../data/products';
-import Image from '../components/shared/Image';
+import initialProducts from '../data/products';
+import ProductsList from '../components/Products/ProductsList';
+import ProductDetails from '../components/Products/ProductDetails';
 
 export default props => {
 
-    const handleProductClicked = id => {
-        console.log(id);
+    const [products, setProducts] = useState(null);
+    const [chosenProduct, setChosenProduct] = useState(null);
+
+    const handleProductClicked = product => {
+        setChosenProduct(product);
+        console.log(product);
     }
+
+    // Just to simulate loading the products from the backend
+    setTimeout(() => {
+        setProducts(initialProducts)
+    }, 2000);
 
     return (
         <StyledProducts>
-            <StyledProductsList>
-                <h2>Take a pick</h2>
-                {products.map(product => (
-                    <StyledProductItem key={product.id} onClick={() => handleProductClicked(product.id)}>
-                        <Image className="product-image" src={`../img/${product.thumbnail}`} alt="nike shoes" />
-                        <div className="product-name">{product.name}</div>
-                        <div className="product-price">{product.price}</div>
-                        <div className="product-is-chosen">{product.isChosen}</div>
-                    </StyledProductItem>
-                ))}
-            </StyledProductsList>
-            <StyledProductsDetails>
-                <h1>Product Details</h1>
-            </StyledProductsDetails>
+            <ProductsList
+                products={products}
+                chosenProduct={chosenProduct}
+                onClick={handleProductClicked}
+            />
+            <ProductDetails
+                className="product-details"
+                product={chosenProduct}
+            />
         </StyledProducts>
     );
 }
@@ -36,58 +41,8 @@ const StyledProducts = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-`;
 
-const StyledProductsList = styled.div`
-    width: 500px;
-    padding: 10px;
-    padding-top: 50px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    -webkit-box-shadow: 1px 0px 0px 0px rgba(0,0,0,0.1);
-    -moz-box-shadow: 1px 0px 0px 0px rgba(0,0,0,0.1);
-    box-shadow: 1px 0px 0px 0px rgba(0,0,0,0.1);
-
-    h2 {
-        text-align: center;
-    }
-`;
-
-const StyledProductItem = styled.div`
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    cursor: pointer;
-
-    :hover {
-        background-color: rgba(0, 0, 0, 0.1);
-    }
-
-    .product-image {
-        max-width: 150px;
-        height: 100%;
-        margin: 20px 5px;
-    }
-
-    .product-name {
+    .product-details {
         flex: 1;
     }
-
-    .product-price {
-        flex: 0 60px;
-    }
-
-    .product-is-chosen {
-        flex: initial;
-    }
-
-    div {
-        margin: 10px;
-    }
-`;
-
-const StyledProductsDetails = styled.div`
-    flex: 1;
 `;
