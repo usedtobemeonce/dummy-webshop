@@ -6,7 +6,7 @@ import CustomLink from './shared/CustomLink';
 const InfoBar = ({ location }) => {
     let showBackToModelsLink = false;
 
-    if (location.pathname !== '/models') {
+    if (location.pathname !== '/models' && location.pathname !== '/') {
         showBackToModelsLink = true;
     } else {
         showBackToModelsLink = false;
@@ -14,7 +14,7 @@ const InfoBar = ({ location }) => {
 
     return (
         <StyledInfoBar justifyEnd={!showBackToModelsLink}>
-            {showBackToModelsLink && <CustomLink to="/models">Back to models</CustomLink>}
+            {showBackToModelsLink && <CustomLink to="/models">Back to products</CustomLink>}
             <CustomLink to="/shopping-cart">Shopping cart</CustomLink>
         </StyledInfoBar>
     );
