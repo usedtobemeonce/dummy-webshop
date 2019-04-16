@@ -8,7 +8,8 @@ import ProductDetails from '../components/Products/ProductDetails';
 import useMedia from '../hooks/useMedia';
 import Context from '../store/context';
 
-export default ({ history, location }) => {
+export default props => {
+    const { history, location } = props;
     const { state, dispatch } = useContext(Context);
     const isSmallScreen = useMedia('(max-width: 1200px)');
     const { product, products } = state;
@@ -48,6 +49,7 @@ export default ({ history, location }) => {
             />
             {!isSmallScreen && <ProductDetails
                 className="product-details"
+                {...props}
             />}
         </StyledProducts>
     );

@@ -9,7 +9,7 @@ import Panel from '../shared/Panel';
 import ProceedOptions from './ProceedOptions';
 import Context from '../../store/context';
 
-export default () => {
+export default props => {
     const { state, dispatch } = useContext(Context);
     const [currentImage, setCurrentImage] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);
@@ -39,6 +39,8 @@ export default () => {
         }
         const selectedProduct = {
             id: product.id,
+            image: product.thumbnail,
+            name: product.name,
             price: product.price,
             size: selectedSize,
         };
@@ -112,7 +114,7 @@ export default () => {
             <Container>
                 <Row>
                     <RowItem>
-                        <ProceedOptions onContinueShoppingClick={handleContinueShopping} />
+                        <ProceedOptions {...props} onContinueShoppingClick={handleContinueShopping} />
                     </RowItem>
                 </Row>
             </Container>

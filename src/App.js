@@ -4,6 +4,7 @@ import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Models from './pages/Models';
+import ShoppingCart from './pages/ShoppingCart';
 import ProductDetails from './components/Products/ProductDetails';
 import useMedia from './hooks/useMedia';
 import Context from './store/context';
@@ -20,6 +21,7 @@ export default withRouter(props => {
     <Switch>
       {isSmallScreen && <Route exact path='/models/product' component={ProductDetails} {...props} />}
       <Route path='/models' component={Models} {...props} />
+      <Route path='/shopping-cart' exact component={ShoppingCart} {...props} />
       <Route exact path='/' component={Home} {...props} />
       <Redirect exact to="/" />
     </Switch>
