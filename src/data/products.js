@@ -23,7 +23,7 @@ export default [
         id: '002',
         thumbnail: '/nike_free/1.png',
         name: 'Nike Free',
-        price: 69.20,
+        price: 79.20,
         isChosen: false,
         images: [
             '/nike_free/1.png',
