@@ -1,9 +1,11 @@
 import { createContext } from 'react';
 
-const Context = createContext({
+const initialState = {
     product: null,
     products: null,
-    shoppingCart: [],
-});
+    shoppingCart: JSON.parse(localStorage.getItem('shoppingCart')) || [],
+}
+
+const Context = createContext(initialState);
 
 export default Context;

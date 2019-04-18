@@ -70,7 +70,7 @@ const Menu = styled.div`
     }
 
     .navActive {
-        border-bottom: 5px solid #0091FC;
+        border-bottom: 3px solid #0091FC;
         transition: all 0.1s ease-in;
     }
 

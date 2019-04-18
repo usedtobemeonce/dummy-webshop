@@ -1,14 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { calculateSum, numToTwoDecimals } from '../../util/helpers';
+import { numToTwoDecimals } from '../../util/helpers';
 
-const PriceFormatter = ({ className, price, arrayToSum }) => {
-    let priceToFormat = price;
-
-    if (arrayToSum) {
-        priceToFormat = calculateSum(arrayToSum);
-    }
+const PriceFormatter = ({ className, price }) => {
 
     const formatAfterDecimal = val => {
         const formatted = numToTwoDecimals(val);
@@ -17,9 +12,9 @@ const PriceFormatter = ({ className, price, arrayToSum }) => {
 
     return (
         <FromattedPrice className={className}>
-            {priceToFormat.toString().split('.')[0]}
+            {price.toString().split('.')[0]}
             {'.'}
-            <SmallPrice className="price-small">{formatAfterDecimal(priceToFormat)}</SmallPrice>
+            <SmallPrice className="price-small">{formatAfterDecimal(price)}</SmallPrice>
         </FromattedPrice>
     );
 }

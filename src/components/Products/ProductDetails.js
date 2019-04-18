@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 import Image from '../shared/Image';
 import Button from '../shared/Button';
@@ -43,7 +45,18 @@ export default props => {
             price: product.price,
             size: selectedSize,
         };
+        let shoppingCart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+        shoppingCart.push(selectedProduct);
+        localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
         dispatch({ type: 'ADD_TO_CART', payload: selectedProduct });
+        toast.success(`${product.name} added to the cart`, {
+            position: "bottom-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
     }
 
     let content = null;
@@ -82,7 +95,9 @@ export default props => {
                                     {isError && <span className="error">Please select a size!</span>}
                                 </RowOptions>
                                 <RowOptions>
-                                    <PriceFormatter className="price" price={product.price} />
+                                    <span className="price">
+                                        $<PriceFormatter price={product.price} />
+                                    </span>
                                 </RowOptions>
                             </Row>
                             <Row>
@@ -90,6 +105,17 @@ export default props => {
                                     <Button className="add-to-cart" onClick={handleAddToCart}>
                                         <FontAwesomeIcon icon="shopping-cart" /> Add to cart
                                     </Button>
+                                    <ToastContainer
+                                        position="bottom-center"
+                                        autoClose={3000}
+                                        hideProgressBar
+                                        newestOnTop={false}
+                                        closeOnClick
+                                        rtl={false}
+                                        pauseOnVisibilityChange
+                                        draggable
+                                        pauseOnHover
+                                    />
                                 </RowOptions>
                             </Row>
                         </Panel>

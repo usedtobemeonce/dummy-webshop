@@ -26,7 +26,9 @@ export default props => {
                     >
                         <Image className="product-image" src={`../img/${product.thumbnail}`} alt="nike shoes" />
                         <div className="product-name">{product.name}</div>
-                        $<PriceFormatter className="product-price" price={product.price} />
+                        <span className="product-price">
+                            $<PriceFormatter price={product.price} />
+                        </span>
                     </StyledProductItem>
                 ))
             }
@@ -81,7 +83,7 @@ const StyledProductItem = styled.div`
     }
 
     .product-price {
-        flex: 0 60px;
+        flex: 0 80px;
     }
 
     div {

@@ -25,7 +25,7 @@ export default withRouter(props => {
       <Route exact path='/' component={Home} {...props} />
       <Redirect exact to="/" />
     </Switch>
-  )
+  );
 
   return (
     <Context.Provider value={{ state, dispatch }}>

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export default styled.button`
     padding: 15px 10px;
@@ -11,6 +11,13 @@ export default styled.button`
     border-radius: 3rem;
     transition: .3s transform ease-in-out;
     cursor: pointer;
+    ${props => props.secondary && css`
+        background-color: transparent;
+        color: #707070;
+    `}
+    ${props => props.flat && css`
+        border-radius: 0;
+    `}
     :active, :focus{
         outline: none;
     }
@@ -19,5 +26,8 @@ export default styled.button`
         transform: scale(1.05);
         border-color: rgba(15, 95, 154, 0.6);
         background: rgba(22, 118, 189, 1);
+        ${props => props.secondary && css`
+            color: #fff;
+        `}
     }
 `;
