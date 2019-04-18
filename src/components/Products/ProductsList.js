@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 
 import Image from '../shared/Image';
 import Spinner from '../shared/Spinner';
+import PriceFormatter from '../shared/PriceFormatter';
 
 export default props => {
 
@@ -25,7 +26,7 @@ export default props => {
                     >
                         <Image className="product-image" src={`../img/${product.thumbnail}`} alt="nike shoes" />
                         <div className="product-name">{product.name}</div>
-                        <div className="product-price">${product.price}</div>
+                        $<PriceFormatter className="product-price" price={product.price} />
                     </StyledProductItem>
                 ))
             }

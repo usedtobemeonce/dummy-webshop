@@ -4,12 +4,9 @@ import styled from 'styled-components';
 import Panel from '../shared/Panel';
 import Image from '../shared/Image';
 import Button from '../shared/Button';
-import { calculateSum } from '../../util/helpers';
+import PriceFormatter from '../shared/PriceFormatter';
 
 const CartItems = ({ productsInCart }) => {
-
-    console.log(productsInCart);
-
     return (
         <Panel>
             <h5>These are the items you've added to the cart, click checkout if you are ready</h5>
@@ -19,15 +16,12 @@ const CartItems = ({ productsInCart }) => {
                     <ProductsListItem key={index}>
                         <Image src={`../img/${product.image}`} />
                         <div className="product-name">{product.name} - size {product.size}</div>
-                        <div className="product-price">
-                            ${product.price.toString().split('.')[0]}
-                            {'.'}
-                            <span className="price-small">{product.price.toString().split('.')[1]}</span>
-                        </div>
+                        $<PriceFormatter className="prroduct-prie" price={product.price} />
                     </ProductsListItem>
                 ))}
             </ProductsList>
-            <h3>Total: ${calculateSum(productsInCart, 'price')}</h3>
+            <hr />
+            <h2>Total: ${<PriceFormatter arrayToSum={productsInCart.map(product => product.price)} />}</h2>
         </Panel>
     );
 }
@@ -56,12 +50,6 @@ const ProductsListItem = styled.div`
         flex: 1;
         max-width: 50px;
         margin: 0 10px;
-    }
-
-    .price-small {
-        font-size: 0.7em;
-        position: relative;
-        bottom: 0.25em;
     }
 `;
 

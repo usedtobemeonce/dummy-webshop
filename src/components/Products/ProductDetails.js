@@ -6,15 +6,14 @@ import Image from '../shared/Image';
 import Button from '../shared/Button';
 import Tag from '../shared/Tag';
 import Panel from '../shared/Panel';
-import ProceedOptions from './ProceedOptions';
 import Context from '../../store/context';
+import PriceFormatter from '../shared/PriceFormatter';
 
 export default props => {
     const { state, dispatch } = useContext(Context);
     const [currentImage, setCurrentImage] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);
     const [isError, setIsError] = useState(false);
-    const [productAddedToCart, setProductAddedToCart] = useState(null);
     const { product } = state;
 
     useEffect(() => {
@@ -44,18 +43,11 @@ export default props => {
             price: product.price,
             size: selectedSize,
         };
-        console.log('add to cart clicked', selectedProduct);
-        setProductAddedToCart(true);
         dispatch({ type: 'ADD_TO_CART', payload: selectedProduct });
     }
 
-    const handleContinueShopping = () => {
-        setProductAddedToCart(false);
-        setSelectedSize(null);
-    }
-
     let content = null;
-    if (product && !productAddedToCart) {
+    if (product) {
         content = (
             <Container>
                 <ProductImagesRow>
@@ -90,11 +82,7 @@ export default props => {
                                     {isError && <span className="error">Please select a size!</span>}
                                 </RowOptions>
                                 <RowOptions>
-                                    <div className="price">
-                                        ${product.price.toString().split('.')[0]}
-                                        {'.'}
-                                        <span className="price-small">{product.price.toString().split('.')[1]}</span>
-                                    </div>
+                                    <PriceFormatter className="price" price={product.price} />
                                 </RowOptions>
                             </Row>
                             <Row>
@@ -105,16 +93,6 @@ export default props => {
                                 </RowOptions>
                             </Row>
                         </Panel>
-                    </RowItem>
-                </Row>
-            </Container>
-        );
-    } else if (productAddedToCart) {
-        content = (
-            <Container>
-                <Row>
-                    <RowItem>
-                        <ProceedOptions {...props} onContinueShoppingClick={handleContinueShopping} />
                     </RowItem>
                 </Row>
             </Container>
@@ -250,12 +228,6 @@ const RowOptions = styled.div`
         margin: 20px;
         font-size: 2rem;
         letter-spacing: .1rem;
-    }
-
-    .price-small {
-        font-size: 0.7em;
-        position: relative;
-        bottom: 0.25em;
     }
     
     .add-to-cart {
