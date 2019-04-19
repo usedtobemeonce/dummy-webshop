@@ -7,12 +7,13 @@ import Panel from '../components/shared/Panel';
 import Image from '../components/shared/Image';
 import Button from '../components/shared/Button';
 import PriceFormatter from '../components/shared/PriceFormatter';
-import { calculateVatFromGross, calculateSum } from '../util/helpers';
+import { calculateVatFromGross, calculateSum, numToTwoDecimals } from '../util/helpers';
 
 const ShoppingCart = ({ history }) => {
     const { state, dispatch } = useContext(Context);
     const [productsInCart, setProductsInCart] = useState([]);
     const [total, setTotal] = useState(0);
+    const [vatAmount, setVatAmount] = useState(0);
     const [selectedProduct, setSelectedProduct] = useState(null);
 
     useEffect(() => {
@@ -24,7 +25,9 @@ const ShoppingCart = ({ history }) => {
         if (productsInCart.length > 0) {
             const productsPrices = productsInCart.map(product => product.price);
             if (productsPrices && productsPrices.length > 0) {
-                setTotal(calculateSum(productsPrices));
+                const totalAmount = calculateSum(productsPrices);
+                setTotal(totalAmount);
+                setVatAmount(numToTwoDecimals(calculateVatFromGross(totalAmount)));
             }
         }
     }, [productsInCart]);
@@ -82,7 +85,7 @@ const ShoppingCart = ({ history }) => {
                 <h2 className="total">
                     Total: ${<PriceFormatter price={total} />}
                 </h2>
-                <h5>VAT (20%): {calculateVatFromGross(total)}</h5>
+                <h5>VAT (20%): ${vatAmount}</h5>
                 <Button>
                     <FontAwesomeIcon style={{ margin: "0 5px" }} icon="chevron-right" /> Proceed to checkout
                 </Button>
@@ -102,6 +105,11 @@ export default ShoppingCart;
 
 const ShoppingCartWrapper = styled.div`
     padding: 6% 10%;
+
+    .total {
+        margin-top: 20px;
+        margin-bottom: 5px;
+    }
 
     @media (max-width: 900px) {
         padding: 2%;
@@ -149,17 +157,13 @@ const ProductsListItem = styled.div`
     }
 
     .product-price {
-        flex: 1;
-        max-width: 80px;
-        margin: 0 10px;
+        flex: 1 0 70px;
+        max-width: 100px;
+        margin: 0;
     }
 
     .product-remove {
         max-width: 55px;
-        margin: 0 10px;
-    }
-
-    .total {
-        margin-top: 20px;
+        margin: 0;
     }
 `;
