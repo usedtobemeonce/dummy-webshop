@@ -45,6 +45,10 @@ const ShoppingCart = ({ history }) => {
         dispatch({ type: 'REMOVE_FROM_CART', payload: index });
     }
 
+    const handleCheckout = () => {
+        history.push('/shopping-cart/checkout');
+    }
+
     let content = (
         <EmptyCart>
             <h2>Seems like there's nothing in your cart</h2>
@@ -83,11 +87,11 @@ const ShoppingCart = ({ history }) => {
                 </ProductsList>
                 <hr />
                 <h2 className="total">
-                    Total: ${<PriceFormatter price={total} />}
+                    Total: $<PriceFormatter price={total} />
                 </h2>
-                <h5>VAT (20%): ${vatAmount}</h5>
-                <Button>
-                    <FontAwesomeIcon style={{ margin: "0 5px" }} icon="chevron-right" /> Proceed to checkout
+                <h5>VAT (20%): $<PriceFormatter price={vatAmount} /></h5>
+                <Button onClick={handleCheckout}>
+                    <FontAwesomeIcon style={{ margin: "0 5px" }} icon="chevron-right" /> Checkout
                 </Button>
             </Panel>
         );

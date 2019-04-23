@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { Badge } from 'antd';
 
 import Logo from '../assets/images/logo.png';
 import Context from '../store/context';
@@ -26,9 +27,11 @@ export default ({ history }) => {
                 <Menu>
                     <NavLink to='/' exact activeClassName="navActive">Home</NavLink>
                     <NavLink to='/models' activeClassName="navActive">Models</NavLink>
-                    <NavLink to='/shopping-cart' exact activeClassName="navActive">
-                        Shopping cart {shoppingCartCount > 0 && <span className="cart-count"> ({shoppingCartCount})</span>}
-                    </NavLink>
+                    <Badge count={shoppingCartCount} style={{ backgroundColor: "#0091FC" }}>
+                        <NavLink to='/shopping-cart' activeClassName="navActive">
+                            Shopping cart
+                        </NavLink>
+                    </Badge>
                 </Menu>
             </StyledHeader>
         </>
@@ -67,6 +70,7 @@ const Menu = styled.div`
 
     a {
         margin: 0 20px;
+        color: inherit;
     }
 
     .navActive {

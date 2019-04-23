@@ -6,7 +6,7 @@ export default styled.button`
     background-color: rgba(0, 145, 252, 1);
     color: #fff;
     font-size: calc(12px + 0.5vw);
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     border: 2px solid rgba(0, 0, 0, .1);
     border-radius: 3rem;
     transition: .3s transform ease-in-out;
@@ -18,6 +18,11 @@ export default styled.button`
     ${props => props.flat && css`
         border-radius: 0;
     `}
+    ${props => props.disabled && css`
+        cursor: not-allowed;
+        background: grey;
+        border: none;
+    `}
     :active, :focus{
         outline: none;
     }
@@ -28,6 +33,11 @@ export default styled.button`
         background: rgba(22, 118, 189, 1);
         ${props => props.secondary && css`
             color: #fff;
+        `}
+        ${props => props.disabled && css`
+            cursor: not-allowed;
+            background: grey;
+            border: none;
         `}
     }
 `;

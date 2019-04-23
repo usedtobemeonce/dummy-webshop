@@ -22,6 +22,22 @@ export default function reducer(state, { type, payload }) {
                 ...state,
                 shoppingCart: [...shoppingCart],
             }
+        case 'DELIVERY_INFO_ADDED':
+            return {
+                ...state,
+                orderInfo: {
+                    ...state.orderInfo,
+                    delivery: payload,
+                }
+            }
+        case 'PAYMENT_INFO_ADDED':
+            return {
+                ...state,
+                orderInfo: {
+                    ...state.orderInfo,
+                    payment: payload,
+                }
+            }
         default: {
             return state;
         }

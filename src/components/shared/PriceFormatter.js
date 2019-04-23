@@ -23,6 +23,8 @@ export default PriceFormatter;
 
 const FromattedPrice = styled.span`
     letter-spacing: .1em;
+    margin-left: 2px;
+    margin-right: 2px;
 `;
 
 const SmallPrice = styled.span`

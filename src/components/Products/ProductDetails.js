@@ -49,7 +49,7 @@ export default props => {
         shoppingCart.push(selectedProduct);
         localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
         dispatch({ type: 'ADD_TO_CART', payload: selectedProduct });
-        toast.success(`${product.name} added to the cart`, {
+        toast.info(`${product.name} added to the cart`, {
             position: "bottom-center",
             autoClose: 3000,
             hideProgressBar: false,
