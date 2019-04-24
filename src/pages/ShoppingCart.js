@@ -52,7 +52,7 @@ const ShoppingCart = ({ history }) => {
         <EmptyCart>
             <h2>Seems like there's nothing in your cart</h2>
             <FontAwesomeIcon style={{ margin: "5% 0" }} size="10x" icon="shopping-cart" />
-            <Button onClick={handleBrowseMoreClicked} secondary>Browse products</Button>
+            <Button onClick={handleBrowseMoreClicked} type="primary" size="large">Browse products</Button>
         </EmptyCart>
     );
     if (productsInCart && productsInCart.length > 0) {
@@ -74,8 +74,7 @@ const ShoppingCart = ({ history }) => {
                             {selectedProduct === index &&
                                 <Button
                                     className="product-remove"
-                                    secondary
-                                    flat
+                                    type="danger"
                                     onClick={() => handleRemoveProductClicked(index)}
                                 >
                                     <FontAwesomeIcon style={{ margin: "0 5px" }} icon="trash" />
@@ -89,7 +88,7 @@ const ShoppingCart = ({ history }) => {
                     Total: $<PriceFormatter price={total} />
                 </h2>
                 <h5>VAT (20%): $<PriceFormatter price={vatAmount} /></h5>
-                <Button onClick={handleCheckout}>
+                <Button type="primary" size="large" onClick={handleCheckout}>
                     <FontAwesomeIcon style={{ margin: "0 5px" }} icon="chevron-right" /> Checkout
                 </Button>
             </Panel>

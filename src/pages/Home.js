@@ -6,7 +6,7 @@ import Button from '../components/shared/Button';
 import Image from '../components/shared/Image';
 
 const Home = ({ history }) => {
-    
+
     const handleButtonClick = () => {
         history.push('/models');
     }
@@ -19,7 +19,7 @@ const Home = ({ history }) => {
             <Content>
                 <h1>Unleash the speed.</h1>
                 <p>Better technique for more speed during those long runs. Increased comfort from the extra cushioning. </p>
-                <Button onClick={handleButtonClick}>Browse models</Button>
+                <Button type="primary" size="large" onClick={handleButtonClick}>Browse models</Button>
             </Content>
         </StyledHome>
     );

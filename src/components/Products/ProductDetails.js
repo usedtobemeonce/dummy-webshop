@@ -102,8 +102,8 @@ export default props => {
                             </Row>
                             <Row>
                                 <RowOptions>
-                                    <Button className="add-to-cart" onClick={handleAddToCart}>
-                                        <FontAwesomeIcon icon="shopping-cart" /> Add to cart
+                                    <Button type="primary" size="large" icon="shopping-cart" className="add-to-cart" onClick={handleAddToCart}>
+                                        Add to cart
                                     </Button>
                                     <ToastContainer
                                         position="bottom-center"
