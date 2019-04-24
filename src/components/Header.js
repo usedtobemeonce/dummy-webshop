@@ -71,16 +71,12 @@ const Menu = styled.div`
     a {
         margin: 0 20px;
         color: inherit;
+        font-size: 16px;
     }
 
     .navActive {
         border-bottom: 3px solid #0091FC;
         transition: all 0.1s ease-in;
-    }
-
-    .cart-count {
-        font-weight: 700;
-        font-size: 1.3rem;
     }
 
     @media (max-width: 1200px) {

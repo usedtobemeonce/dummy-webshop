@@ -18,6 +18,7 @@ export default function reducer(state, { type, payload }) {
         case 'REMOVE_FROM_CART':
             const shoppingCart = [...state.shoppingCart];
             shoppingCart.splice(payload, 1);
+            localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
             return {
                 ...state,
                 shoppingCart: [...shoppingCart],
@@ -37,6 +38,26 @@ export default function reducer(state, { type, payload }) {
                     ...state.orderInfo,
                     payment: payload,
                 }
+            }
+        case 'ORDER_CONFIRMED':
+            return {
+                ...state,
+                orderInfo: {
+                    delivery: {
+                        name: '',
+                        street: '',
+                        zipcode: '',
+                        city: '',
+                        email: '',
+                        phone: '',
+                    },
+                    payment: {
+                        cardNumber: '',
+                        expiration: '',
+                        cvv: '',
+                    }
+                },
+                shoppingCart: [],
             }
         default: {
             return state;

@@ -24,15 +24,7 @@ export default withRouter(props => {
       {isSmallScreen && <Route exact path='/models/product' component={ProductDetails} {...props} />}
       <Route path='/models' component={Models} {...props} />
       <Route path='/shopping-cart' exact component={ShoppingCart} {...props} />
-      <Route
-        path='/shopping-cart/checkout'
-        exact
-        render={() => (
-          state.shoppingCart.length === 0
-            ? (<Redirect to='/shopping-cart' />)
-            : (<Checkout {...props} />)
-        )}
-      />
+      <Route path='/shopping-cart/checkout' exact component={Checkout} {...props} />
       <Route exact path='/' component={Home} {...props} />
       <Redirect exact to="/" />
     </Switch>

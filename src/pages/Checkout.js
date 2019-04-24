@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import Stepper from 'react-stepper-horizontal';
+import { Redirect } from 'react-router-dom';
 
 import Panel from '../components/shared/Panel';
 import Context from '../store/context';
@@ -8,7 +9,7 @@ import Button from '../components/shared/Button';
 import Delivery from '../components/Checkout/Delivery';
 import Payment from '../components/Checkout/Payment';
 import Overview from '../components/Checkout/Overview';
-import Completed from '../components/Checkout/Completed';
+import Confirmed from '../components/Checkout/Confirmed';
 
 const steps = [
     { title: 'Delivery' },
@@ -17,9 +18,9 @@ const steps = [
     { title: 'Completed' }
 ];
 
-const Checkout = ({ history }) => {
+const Checkout = () => {
     const { state, dispatch } = useContext(Context);
-    const [activeStep, setActiveStep] = useState(1);
+    const [activeStep, setActiveStep] = useState(0);
 
     const handleDeliveryFormSubmit = values => {
         dispatch({ type: 'DELIVERY_INFO_ADDED', payload: values });
@@ -28,6 +29,11 @@ const Checkout = ({ history }) => {
 
     const handlePaymentFormSubmit = values => {
         dispatch({ type: 'PAYMENT_INFO_ADDED', payload: values });
+        handleNextClicked();
+    }
+
+    const handleConfirmClicked = () => {
+        dispatch({ type: 'ORDER_CONFIRMED' });
         handleNextClicked();
     }
 
@@ -50,10 +56,16 @@ const Checkout = ({ history }) => {
                 />;
             break;
         case 2:
-            checkoutStep = <Overview order={state.shoppingCart} />;
+            checkoutStep =
+                <Overview
+                    order={state.shoppingCart}
+                    delivery={state.orderInfo.delivery}
+                    onBack={handleBackClicked}
+                    onConfirm={handleConfirmClicked}
+                />;
             break;
         case 3:
-            checkoutStep = <Completed />;
+            checkoutStep = <Confirmed />;
             break;
         default:
             checkoutStep =
@@ -64,14 +76,19 @@ const Checkout = ({ history }) => {
             break;
     }
 
-    return (
-        <CheckoutWrapper>
-            <Panel>
-                <Stepper steps={steps} activeStep={activeStep} />
-                {checkoutStep}
-            </Panel>
-        </CheckoutWrapper>
-    );
+    let content = <Redirect to="/shopping-cart" />;
+    if (state.shoppingCart.length > 0) {
+        content = (
+            <CheckoutWrapper>
+                <Panel>
+                    <Stepper steps={steps} activeStep={activeStep} />
+                    {checkoutStep}
+                </Panel>
+            </CheckoutWrapper>
+        );
+    }
+
+    return (content);
 }
 
 export default Checkout;
@@ -91,9 +108,4 @@ const CheckoutWrapper = styled.div`
     @media (max-width: 900px) {
         padding: 0;
     }
-`;
-
-const StyledButtons = styled.div`
-    display: flex;
-    justify-content: space-between;
 `;

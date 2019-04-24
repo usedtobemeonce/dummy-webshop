@@ -18,7 +18,6 @@ const ShoppingCart = ({ history }) => {
 
     useEffect(() => {
         setProductsInCart(state.shoppingCart);
-        localStorage.setItem('shoppingCart', JSON.stringify(state.shoppingCart));
     }, [state.shoppingCart]);
 
     useEffect(() => {
@@ -116,7 +115,7 @@ const ShoppingCartWrapper = styled.div`
     }
 
     @media (max-width: 900px) {
-        padding: 2%;
+        padding: 0;
     }
 `;
 

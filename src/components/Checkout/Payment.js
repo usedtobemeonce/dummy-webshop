@@ -166,7 +166,7 @@ export default Payment;
 const PaymentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px 0;
+  margin-top: 20px;
 `;
 
 const Row = styled.div`
@@ -177,16 +177,11 @@ const Column = styled.div`
   display: flex;
 
   div:first-child {
-    max-width: 200px;
+    flex: 1;
     margin-right: 20px;
   }
 
   div:nth-child(2) {
-    max-width: 200px;
-    margin-right: 20px;
-  }
-
-  div:nth-child(3) {
     flex: 1;
   }
 `;
@@ -196,6 +191,7 @@ const InputError = styled.div`
 `;
 
 const ButtonsRow = styled.div`
+  margin-top: 30px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
